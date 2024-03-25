@@ -210,7 +210,7 @@ def pregunta_09():
     df['year'] = df['year'].fillna(1999).astype(int) 
     return df
 
-#print(pregunta_09())
+print(pregunta_09())
 
 
 
@@ -237,7 +237,7 @@ def pregunta_10():
 
     return grouped_df
 
-#print(pregunta_10())
+print(pregunta_10())
 
 
 def pregunta_11():
