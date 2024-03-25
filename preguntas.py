@@ -234,8 +234,8 @@ def pregunta_10():
     df = pd.read_csv("tbl0.tsv", sep="\t")
 
     # Ordenar los valores de _c2 antes de unirlos en una lista separada por ':'
-    df['_c2'] = df['_c2'].astype(str)
-    grouped_df = df.groupby('_c1')['_c2'].apply(lambda x: ':'.join(sorted(x))).reset_index()
+    #df['_c2'] = df['_c2'].astype(str)
+    grouped_df = df.groupby('_c1')['_c2'].apply(lambda x: ':'.join(sorted(x.astype(str)))).reset_index().set_index('_c1')
 
     return grouped_df
 
