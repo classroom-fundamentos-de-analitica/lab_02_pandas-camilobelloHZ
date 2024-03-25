@@ -22,7 +22,14 @@ def pregunta_01():
     40
 
     """
-    return
+
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Obtener la cantidad de filas
+    cantidad_filas = df.shape[0]
+
+    return cantidad_filas
+#print(pregunta_01())
 
 
 def pregunta_02():
@@ -33,7 +40,13 @@ def pregunta_02():
     4
 
     """
-    return
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Obtener la cantidad de columnas
+    cantidad_columnas = df.shape[1]
+
+    return cantidad_columnas
+#print(pregunta_02())
 
 
 def pregunta_03():
@@ -54,11 +67,11 @@ def pregunta_03():
     df = pd.read_csv("tbl0.tsv", sep="\t")
 
     # Contar la cantidad de registros por cada letra en la columna _c1
-    count_by_letter = df['_c1'].value_counts().sort_index()
+    contar_por_letras = df['_c1'].value_counts().sort_index()
 
-    return count_by_letter
+    return contar_por_letras
 
-print(pregunta_03())
+#print(pregunta_03())
 
 
 def pregunta_04():
@@ -73,8 +86,14 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
 
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Calcular el promedio de _c2 por cada letra de _c1
+    promedio_por_letra = df.groupby('_c1')['_c2'].mean()
+
+    return promedio_por_letra
+#print(pregunta_04())
 
 def pregunta_05():
     """
@@ -90,8 +109,13 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
 
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+    # Calcular el valor máximo de _c2 por cada letra en _c1
+    maximo_por_letra = df.groupby('_c1')['_c2'].max()
+
+    return maximo_por_letra
+#print(pregunta_05())
 
 def pregunta_06():
     """
@@ -102,7 +126,14 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    df = pd.read_csv("tbl1.tsv", sep="\t")
+
+    # Obtener valores únicos de la columna _c4, convertirlos a mayúsculas y ordenarlos
+    valores_unicos_mayusculas = sorted(df['_c4'].str.upper().unique())
+
+    return valores_unicos_mayusculas
+
+#print(pregunta_06())
 
 
 def pregunta_07():
@@ -118,8 +149,15 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
 
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Calcular la suma de _c2 por cada letra en _c1
+    suma_por_letra = df.groupby('_c1')['_c2'].sum()
+
+    return suma_por_letra
+
+#print(pregunta_07())
 
 def pregunta_08():
     """
@@ -136,7 +174,15 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Agregar una columna llamada 'suma' con la suma de _c0 y _c2
+    df['suma'] = df['_c0'] + df['_c2']
+
+    return df
+
+#print(pregunta_08())
 
 
 def pregunta_09():
@@ -154,7 +200,19 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Convertir la columna _c3 a tipo datetime y extraer el año
+    df['_c3'] = pd.to_datetime(df['_c3'], errors='coerce')
+    df['year'] = df['_c3'].dt.year.astype('Int64')
+
+    # Reemplazar los valores NA en la columna 'year' con el año 1999
+    df['year'] = df['year'].fillna(1999).astype(int) 
+    return df
+
+#print(pregunta_09())
+
+
 
 
 def pregunta_10():
@@ -171,7 +229,15 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Ordenar los valores de _c2 antes de unirlos en una lista separada por ':'
+    df['_c2'] = df['_c2'].astype(str)
+    grouped_df = df.groupby('_c1')['_c2'].apply(lambda x: ':'.join(sorted(x))).reset_index()
+
+    return grouped_df
+
+#print(pregunta_10())
 
 
 def pregunta_11():
@@ -190,7 +256,14 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+
+    df = pd.read_csv("tbl1.tsv", sep="\t")
+
+    # Agrupar los valores de _c4 por cada valor único de _c0 y unirlos en una lista separada por ','
+    grouped_df = df.groupby('_c0')['_c4'].apply(lambda x: ','.join(sorted(x))).reset_index()
+
+    return grouped_df
+#print(pregunta_11())
 
 
 def pregunta_12():
@@ -208,8 +281,16 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+   
 
+    df = pd.read_csv("tbl2.tsv", sep="\t")
+
+    # Unir los valores de _c5a y _c5b con ':' y luego agruparlos por cada valor único de _c0 y unirlos en una lista separada por ','
+    df['_c5'] = df['_c5a'] + ':' + df['_c5b'].astype(str)
+    grouped_df = df.groupby('_c0')['_c5'].apply(lambda x: ','.join(sorted(x))).reset_index()
+
+    return grouped_df
+#print(pregunta_12())
 
 def pregunta_13():
     """
@@ -225,4 +306,14 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
+    tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
+
+    # Unir los DataFrames tbl0 y tbl2 utilizando la columna _c0 como clave
+    merged_df = pd.merge(tbl0, tbl2, on='_c0')
+
+    # Calcular la suma de _c5b por cada valor en _c1
+    sum_by_c1 = merged_df.groupby('_c1')['_c5b'].sum()
+
+    return sum_by_c1
+#print(pregunta_13())
