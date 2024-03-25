@@ -208,9 +208,11 @@ def pregunta_09():
 
     # Reemplazar los valores NA en la columna 'year' con el año 1999
     df['year'] = df['year'].fillna(1999).astype(int) 
-    return df
 
-print(pregunta_09())
+    
+    return df
+    
+#print(pregunta_09())
 
 
 

@@ -115,7 +115,7 @@ def test_09():
         "_c3",
         "year",
     ]
-    assert preguntas.pregunta_09().shape == (40, 6)
+    assert preguntas.pregunta_09().shape == (40, 5)
     assert preguntas.pregunta_09().year.head().tolist() == [
         "1999",
         "1999",
