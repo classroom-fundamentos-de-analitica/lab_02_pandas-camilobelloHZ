@@ -50,7 +50,15 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+
+    df = pd.read_csv("tbl0.tsv", sep="\t")
+
+    # Contar la cantidad de registros por cada letra en la columna _c1
+    count_by_letter = df['_c1'].value_counts().sort_index()
+
+    return count_by_letter
+
+print(pregunta_03())
 
 
 def pregunta_04():
