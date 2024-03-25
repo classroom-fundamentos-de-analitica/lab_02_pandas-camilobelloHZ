@@ -203,11 +203,9 @@ def pregunta_09():
     df = pd.read_csv("tbl0.tsv", sep="\t")
 
     # Convertir la columna _c3 a tipo datetime y extraer el año
-    df['_c3'] = pd.to_datetime(df['_c3'], errors='coerce')
-    df['year'] = df['_c3'].dt.year.astype('Int64')
-
-    # Reemplazar los valores NA en la columna 'year' con el año 1999
-    df['year'] = df['year'].fillna(1999).astype(int) 
+    #df['_c3'] = pd.to_datetime(df['_c3'], errors='coerce')
+    #df['year'] = df['_c3'].dt.year.astype('Int64')
+    df = df.assign(year=df['_c3'].str.split('-').str[0])
 
     
     return df
@@ -239,7 +237,7 @@ def pregunta_10():
 
     return grouped_df
 
-print(pregunta_10())
+#print(pregunta_10())
 
 
 def pregunta_11():
