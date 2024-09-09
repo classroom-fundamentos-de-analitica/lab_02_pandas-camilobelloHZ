@@ -317,3 +317,4 @@ def pregunta_13():
 
     return sum_by_c1
 #print(pregunta_13())
+#print()
